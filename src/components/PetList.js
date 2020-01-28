@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { 
-  View, Text, StyleSheet, TextInput, Keyboard, Button, FlatList
+  View, Text, StyleSheet, TextInput, Keyboard, Button, FlatList, Item
 } from 'react-native';
 import { observer, observable, decorate } from 'mobx-react';
 
 @observer export default class PetList extends Component {
 
   render() {
-    console.log(this.props.store.pets[1])
     return (
       <View>
         <FlatList
-          data={this.props.store.pets}
-          renderItem={({item}) => <Text style={styles.petItem}>{JSON.stringify(item)}</Text>}
+          data={this.props.store.pets.slice()}
+          renderItem={({ item }) => <Text>{JSON.stringify(item)}</Text>}
+          keyExtractor={(item, index) => item.name + index}
         />
       </View>
     )
@@ -35,8 +35,5 @@ const styles = StyleSheet.create({
     height: 30,
     paddingLeft: 10,
     paddingRight: 10
-  },
-  petItem: {
-    marginBottom: 10
   }
 });
