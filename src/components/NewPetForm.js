@@ -14,9 +14,10 @@ import {
 import { Formik } from 'formik';
 import { observer, observable, decorate } from 'mobx-react';
 
+
 @observer export default class NewPetForm extends Component {
 
-  render() {
+  render() {    
     return (
       <View>
         <Formik
@@ -40,10 +41,13 @@ import { observer, observable, decorate } from 'mobx-react';
                 values, { setSubmitting, setErrors, resetForm }
               ) => {
                 setTimeout(() => {
+                  Keyboard.dismiss
                   this.props.store.addPet(values)
                   resetForm({})
                   setSubmitting(false)
                 }, 400)
+
+                this.props.navigation.navigate("PetList")
               }}
 
               render={({

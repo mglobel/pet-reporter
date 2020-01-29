@@ -4,13 +4,18 @@ import {
 } from 'react-native';
 import { observer, observable, decorate } from 'mobx-react';
 
-@observer export default class PetList extends Component {
+import PetStore, { Pet } from '../store/PetStore'
 
+
+@observer export default class PetList extends Component {
+  
   render() {
+    const pets = PetStore.pets
+    
     return (
       <View>
         <FlatList
-          data={this.props.store.pets.slice()}
+          data={pets.slice()}
           renderItem={({ item }) => <Text>{JSON.stringify(item)}</Text>}
           keyExtractor={(item, index) => item.name + index}
         />

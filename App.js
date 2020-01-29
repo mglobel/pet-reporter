@@ -16,6 +16,10 @@ import {
   StatusBar,
 } from 'react-native';
 
+import 'react-native-gesture-handler';
+import { createAppContainer } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+
 import {
   Header,
   LearnMoreLinks,
@@ -31,20 +35,36 @@ import PetList from './src/components/PetList'
 
 import PetStore from './src/store/PetStore'
 
-const App: () => React$Node = () => {
+const App: () => React$Node = ({ navigation }) => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <View style={styles.container}>
           <Text style={styles.header}>Pet's Near You</Text>
-          <NewPetForm store={PetStore} />
-          <PetList store={PetStore} />
+          <NewPetForm store={PetStore} navigation={navigation}/>
         </View>
       </SafeAreaView>
     </>
   );
 };
+
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: App,
+    navigationOptions: {
+      headerTitle: 'Pet Reporter Form'
+    }
+  },
+  PetForm: {
+    screen: NewPetForm
+  },
+  PetList: {
+    screen: PetList
+  },
+  initialRouteName: 'NewPetForm'
+})
+
 
 const styles = StyleSheet.create({
   header: {
@@ -62,4 +82,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;
+// export default App;
+export default createAppContainer(AppNavigator);
